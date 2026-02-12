@@ -5,6 +5,7 @@
 //! - [`font`] - Vector font traits
 //! - [`game`] - Game lifecycle trait and context
 //! - [`input`] - Input abstraction
+//! - [`projectile`] - 2D and 3D projectile systems
 //!
 //! Core types and math are re-exported from dependencies:
 //! - [`vectorcade_core`] - Rgba, GameRng, Xorshift64
@@ -14,6 +15,7 @@ pub mod draw;
 pub mod font;
 pub mod game;
 pub mod input;
+pub mod projectile;
 
 // Re-export core types
 pub use vectorcade_core::{GameRng, GameRngExt, Rgba, Xorshift64};
