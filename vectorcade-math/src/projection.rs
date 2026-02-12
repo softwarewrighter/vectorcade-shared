@@ -1,11 +1,25 @@
 //! 3D projection and angle helpers for 2.5D games.
+//!
+//! Provides perspective projection for pseudo-3D effects (like Tempest or
+//! Star Wars) and angle manipulation utilities.
 
 use glam::{Vec2, Vec3};
 use std::f32::consts::PI;
 
-/// Minimal 3D->2D perspective projection for "2.5D vector" games.
+/// Project a 3D point to 2D screen coordinates.
 ///
-/// Camera looks down -Z axis. Returns `None` if point is behind camera.
+/// Uses perspective projection with the camera looking down the -Z axis.
+/// Points behind the camera (positive Z) return `None`.
+///
+/// # Arguments
+///
+/// * `p` - Point in 3D world space
+/// * `fov_y_rad` - Vertical field of view in radians
+/// * `aspect` - Aspect ratio (width / height)
+///
+/// # Returns
+///
+/// 2D point in normalized device coordinates, or `None` if behind camera.
 #[must_use]
 pub fn project_persp(p: Vec3, fov_y_rad: f32, aspect: f32) -> Option<Vec2> {
     let z = -p.z;

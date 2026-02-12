@@ -1,6 +1,11 @@
 //! VectorCade math utilities.
 //!
-//! Math helpers and collision detection for 2D/3D vector games.
+//! Math helpers and collision detection for 2D/3D vector games:
+//!
+//! - [`collision`] - AABB, circle, and line intersection tests
+//! - [`helpers`] - Interpolation, clamping, and screen wrapping
+//! - [`projection`] - 3D perspective projection and angle utilities
+//! - [`transform`] - 2D transformation matrix builders
 
 pub mod collision;
 pub mod helpers;

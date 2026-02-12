@@ -1,4 +1,7 @@
-//! Basic collision detection for 2D games.
+//! Collision detection primitives for 2D games.
+//!
+//! Provides axis-aligned bounding boxes ([`Aabb`]), circles ([`Circle`]),
+//! and line intersection tests for basic collision detection.
 
 mod aabb;
 mod circle;
@@ -9,6 +12,14 @@ pub use circle::Circle;
 use glam::Vec2;
 
 /// Check if a line segment intersects an AABB.
+///
+/// Uses slab-based intersection testing for efficiency.
+///
+/// # Arguments
+///
+/// * `a` - Start point of the line segment
+/// * `b` - End point of the line segment
+/// * `aabb` - The axis-aligned bounding box to test against
 #[must_use]
 pub fn line_aabb_intersect(a: Vec2, b: Vec2, aabb: &Aabb) -> bool {
     if aabb.contains_point(a) || aabb.contains_point(b) {
@@ -45,6 +56,14 @@ pub fn line_aabb_intersect(a: Vec2, b: Vec2, aabb: &Aabb) -> bool {
 }
 
 /// Check if a line segment intersects a circle.
+///
+/// Uses quadratic formula to find intersection points.
+///
+/// # Arguments
+///
+/// * `a` - Start point of the line segment
+/// * `b` - End point of the line segment
+/// * `circle` - The circle to test against
 #[must_use]
 pub fn line_circle_intersect(a: Vec2, b: Vec2, circle: &Circle) -> bool {
     let d = b - a;

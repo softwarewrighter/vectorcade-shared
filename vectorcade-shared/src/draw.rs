@@ -45,47 +45,93 @@ impl Default for Stroke {
     }
 }
 
+/// A line segment with stroke style.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Line2 {
+    /// Start point of the line.
     pub a: Vec2,
+    /// End point of the line.
     pub b: Vec2,
+    /// Stroke style (color, width, glow).
     pub stroke: Stroke,
 }
 
+/// Display-list command for vector rendering.
+///
+/// Games emit a `Vec<DrawCmd>` each frame. The renderer processes
+/// these commands in order to produce the final image.
 #[derive(Clone, Debug, PartialEq)]
 pub enum DrawCmd {
+    /// Fill the entire screen with a solid color.
     Clear {
+        /// Background color.
         color: Rgba,
     },
 
+    /// Draw a single line segment.
     Line(Line2),
 
+    /// Draw a series of connected line segments.
     Polyline {
+        /// Points forming the polyline path.
         pts: Vec<Vec2>,
+        /// If true, connect the last point back to the first.
         closed: bool,
+        /// Stroke style for all segments.
         stroke: Stroke,
     },
 
-    /// Optional early text support; can be implemented by a vector-font backend.
+    /// Draw text using a vector font.
+    ///
+    /// Requires a font backend that implements the `VectorFont` trait.
     Text {
+        /// Position of the text baseline origin.
         pos: Vec2,
+        /// The text string to render.
         text: String,
+        /// Font size in screen pixels.
         size_px: f32,
+        /// Text color.
         color: Rgba,
+        /// Font style (Atari, Midway, etc.).
         style: crate::font::FontStyleId,
     },
 
+    /// Push a transformation matrix onto the transform stack.
+    ///
+    /// Subsequent draw commands are transformed by this matrix
+    /// until a matching `PopTransform` is issued.
     PushTransform(Mat3),
+
+    /// Pop the most recent transformation from the stack.
     PopTransform,
 
-    /// Optional: a way to group commands (helps render backends batch).
+    /// Begin a named render layer (optional grouping hint).
+    ///
+    /// Helps render backends optimize batching.
     BeginLayer {
+        /// Layer identifier for debugging/profiling.
         name: &'static str,
     },
+
+    /// End the current render layer.
     EndLayer,
 }
 
-/// Helper for building a "wire rectangle" in world coords.
+/// Create a wireframe rectangle from corner coordinates.
+///
+/// Returns a closed `Polyline` forming a rectangle from `min` to `max`.
+///
+/// # Example
+///
+/// ```ignore
+/// let rect = rect_wire(
+///     Vec2::new(-0.5, -0.5),
+///     Vec2::new(0.5, 0.5),
+///     Stroke::new(Rgba::GREEN, 2.0),
+/// );
+/// ```
+#[must_use]
 pub fn rect_wire(min: Vec2, max: Vec2, stroke: Stroke) -> DrawCmd {
     DrawCmd::Polyline {
         pts: vec![
