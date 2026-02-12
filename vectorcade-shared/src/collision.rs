@@ -193,14 +193,30 @@ mod tests {
     #[test]
     fn line_aabb() {
         let aabb = Aabb::from_center(Vec2::ZERO, Vec2::splat(1.0));
-        assert!(line_aabb_intersect(Vec2::new(-2.0, 0.0), Vec2::new(2.0, 0.0), &aabb));
-        assert!(!line_aabb_intersect(Vec2::new(-2.0, 2.0), Vec2::new(2.0, 2.0), &aabb));
+        assert!(line_aabb_intersect(
+            Vec2::new(-2.0, 0.0),
+            Vec2::new(2.0, 0.0),
+            &aabb
+        ));
+        assert!(!line_aabb_intersect(
+            Vec2::new(-2.0, 2.0),
+            Vec2::new(2.0, 2.0),
+            &aabb
+        ));
     }
 
     #[test]
     fn line_circle() {
         let circle = Circle::new(Vec2::ZERO, 1.0);
-        assert!(line_circle_intersect(Vec2::new(-2.0, 0.0), Vec2::new(2.0, 0.0), &circle));
-        assert!(!line_circle_intersect(Vec2::new(-2.0, 2.0), Vec2::new(2.0, 2.0), &circle));
+        assert!(line_circle_intersect(
+            Vec2::new(-2.0, 0.0),
+            Vec2::new(2.0, 0.0),
+            &circle
+        ));
+        assert!(!line_circle_intersect(
+            Vec2::new(-2.0, 2.0),
+            Vec2::new(2.0, 2.0),
+            &circle
+        ));
     }
 }

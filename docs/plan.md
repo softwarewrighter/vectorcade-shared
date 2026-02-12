@@ -14,7 +14,7 @@ The core API is implemented. Focus now shifts to documentation, testing, and pre
 - [x] `InputState` trait and supporting types
 - [x] `VectorFont` trait and `GlyphPath` types
 - [x] Math helpers (clamp, wrap, rot2, translate2)
-- [x] 3D→2D perspective projection
+- [x] 3D->2D perspective projection
 - [x] `Rgba` color type with constants
 - [x] Basic math smoke tests
 

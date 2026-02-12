@@ -78,7 +78,11 @@ impl Xorshift64 {
     /// Seed must be non-zero; zero seeds are replaced with a default.
     #[must_use]
     pub const fn new(seed: u64) -> Self {
-        let state = if seed == 0 { 0xDEAD_BEEF_CAFE_BABE } else { seed };
+        let state = if seed == 0 {
+            0xDEAD_BEEF_CAFE_BABE
+        } else {
+            seed
+        };
         Self { state }
     }
 
@@ -129,7 +133,7 @@ mod tests {
         let mut rng = Xorshift64::new(123);
         for _ in 0..1000 {
             let v = rng.range_f32(-1.0, 1.0);
-            assert!(v >= -1.0 && v < 1.0);
+            assert!((-1.0..1.0).contains(&v));
         }
     }
 
@@ -138,7 +142,7 @@ mod tests {
         let mut rng = Xorshift64::new(456);
         for _ in 0..1000 {
             let v = rng.range_i32(0, 10);
-            assert!(v >= 0 && v < 10);
+            assert!((0..10).contains(&v));
         }
     }
 

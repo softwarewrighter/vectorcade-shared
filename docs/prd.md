@@ -42,7 +42,7 @@ Developers implementing new games for the platform will use these traits and typ
 | F3 | Define `InputState` trait abstracting keyboard, axes, pointer | Done |
 | F4 | Define `VectorFont` trait for stroke-based font rendering | Done |
 | F5 | Provide 2D math helpers (rotation, translation matrices) | Done |
-| F6 | Provide 3D→2D perspective projection for 2.5D games | Done |
+| F6 | Provide 3D->2D perspective projection for 2.5D games | Done |
 | F7 | Define `Rgba` color type with common constants | Done |
 | F8 | Define `Stroke` type with width and glow parameters | Done |
 

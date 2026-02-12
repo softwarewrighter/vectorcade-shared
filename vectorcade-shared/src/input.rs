@@ -31,7 +31,11 @@ pub struct Button {
 }
 
 impl Button {
-    pub const UP: Button = Button { is_down: false, went_down: false, went_up: false };
+    pub const UP: Button = Button {
+        is_down: false,
+        went_down: false,
+        went_up: false,
+    };
 }
 
 #[derive(Clone, Copy, Debug, PartialEq)]

@@ -15,35 +15,37 @@
 
 ```
 vectorcade-shared/
-├── src/
-│   ├── lib.rs      # Crate root, re-exports all modules
-│   ├── color.rs    # Rgba color type with common constants
-│   ├── draw.rs     # DrawCmd display-list primitives (Line, Polyline, Text, Transform)
-│   ├── font.rs     # VectorFont trait and GlyphPath types
-│   ├── game.rs     # Game trait, GameCtx, ScreenInfo, AudioOut
-│   ├── input.rs    # InputState trait, Key/Axis enums, Button/Pointer types
-│   └── math.rs     # Helpers: clamp, wrap, 2D transforms, 3D projection
-└── tests/
-    └── math_smoke.rs
++-- src/
+|   +-- lib.rs      # Crate root, re-exports all modules
+|   +-- collision.rs # AABB, Circle, line intersection
+|   +-- color.rs    # Rgba color type with common constants
+|   +-- draw.rs     # DrawCmd display-list primitives
+|   +-- font.rs     # VectorFont trait and GlyphPath types
+|   +-- game.rs     # Game trait, GameCtx, ScreenInfo, AudioOut
+|   +-- input.rs    # InputState trait, Key/Axis enums
+|   +-- math.rs     # 2D/3D math helpers
+|   +-- rng.rs      # GameRng trait, Xorshift64
++-- tests/
+    +-- math_smoke.rs
 ```
 
 ## Dependency Graph (Multi-Repo DAG)
 
 ```
-                    vectorcade-shared (this repo)
-                           │
-          ┌────────────────┼────────────────┐
-          │                │                │
-          ▼                ▼                ▼
-   vectorcade-fonts  vectorcade-render-wgpu  │
-          │                │                │
-          └────────┬───────┘                │
-                   │                        │
-                   ▼                        │
-            vectorcade-games ◄──────────────┘
-                   │
-                   ▼
-            vectorcade-web-yew
+                  vectorcade-shared (this repo)
+                           |
+         +-----------------+----------------+
+         |                 |                |
+         v                 v                |
+  vectorcade-fonts  vectorcade-render-wgpu  |
+         |                 |                |
+         +--------+--------+                |
+                  |                         |
+                  v                         |
+           vectorcade-games <---------------+
+                  |
+                  v
+           vectorcade-web-yew
 ```
 
 ## Key Types

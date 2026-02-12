@@ -54,7 +54,9 @@ pub struct Line2 {
 
 #[derive(Clone, Debug, PartialEq)]
 pub enum DrawCmd {
-    Clear { color: Rgba },
+    Clear {
+        color: Rgba,
+    },
 
     Line(Line2),
 
@@ -77,7 +79,9 @@ pub enum DrawCmd {
     PopTransform,
 
     /// Optional: a way to group commands (helps render backends batch).
-    BeginLayer { name: &'static str },
+    BeginLayer {
+        name: &'static str,
+    },
     EndLayer,
 }
 

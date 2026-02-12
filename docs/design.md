@@ -88,10 +88,10 @@
 
 ### What Doesn't Go Here
 
-- Rendering implementation → `vectorcade-render-wgpu`
-- Font glyph data → `vectorcade-fonts`
-- Game implementations → `vectorcade-games`
-- Platform integration → `vectorcade-web-yew`
+- Rendering implementation -> `vectorcade-render-wgpu`
+- Font glyph data -> `vectorcade-fonts`
+- Game implementations -> `vectorcade-games`
+- Platform integration -> `vectorcade-web-yew`
 
 ## Error Handling
 
