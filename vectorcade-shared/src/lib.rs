@@ -21,6 +21,7 @@ pub use vectorcade_core::{GameRng, GameRngExt, Rgba, Xorshift64};
 // Re-export math types
 pub use vectorcade_math::{
     Aabb, Circle, angle_diff, clamp, depth_intensity, inv_lerp, lerp, line_aabb_intersect,
-    line_circle_intersect, normalize_angle, project_persp, remap, rot2, scale2, scale2_uniform,
-    translate2, wrap_position, wrap_range, wrap_signed_unit,
+    line_circle_intersect, normalize_angle, project_line_3d, project_persp, remap, rot2,
+    rotate_point_y, scale2, scale2_uniform, translate2, wrap_position, wrap_range,
+    wrap_signed_unit,
 };

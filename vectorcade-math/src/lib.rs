@@ -15,5 +15,7 @@ pub mod transform;
 // Re-export commonly used items
 pub use collision::{Aabb, Circle, line_aabb_intersect, line_circle_intersect};
 pub use helpers::{clamp, inv_lerp, lerp, remap, wrap_position, wrap_range, wrap_signed_unit};
-pub use projection::{angle_diff, depth_intensity, normalize_angle, project_persp};
+pub use projection::{
+    angle_diff, depth_intensity, normalize_angle, project_line_3d, project_persp, rotate_point_y,
+};
 pub use transform::{rot2, scale2, scale2_uniform, translate2};
