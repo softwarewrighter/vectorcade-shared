@@ -1,5 +1,5 @@
 use approx::assert_relative_eq;
-use vectorcade_shared::math::{clamp, wrap_signed_unit};
+use vectorcade_shared::{clamp, wrap_signed_unit};
 
 #[test]
 fn clamp_works() {

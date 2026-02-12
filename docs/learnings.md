@@ -29,30 +29,28 @@ This document captures issues encountered and their solutions during development
 **Root cause:** Copy-pasting from editor that auto-formats, or using fancy characters for visual appeal.
 
 **Solution:** Replace Unicode with ASCII equivalents:
-- `|` instead of `│`
-- `+` instead of `┌ ┐ └ ┘ ├ ┤ ┬ ┴ ┼`
-- `-` instead of `─`
-- `->` instead of `->`
-- `v` instead of `▼`
+- Use pipe `|` instead of box-drawing vertical lines
+- Use `+` instead of box-drawing corners and junctions
+- Use `-` instead of box-drawing horizontal lines
+- Use `->` instead of fancy arrows
+- Use `v` instead of down-arrow symbols
 
 **Prevention:** Run `markdown-checker -f "**/*.md"` before every commit.
 
-## Open Issues (sw-checklist)
+### Issue: sw-checklist module/function limits
 
-The following sw-checklist requirements need architectural changes:
+**What went wrong:** Initial single-crate design exceeded sw-checklist limits:
+- 9 modules per crate (max 7)
+- Several modules had >7 functions
 
-1. **Module function count exceeded** - Several modules have >7 functions:
-   - collision.rs: 16 functions
-   - math.rs: 15 functions
-   - rng.rs: 16 functions
-   - game.rs: 9 functions
+**Solution:** Refactored into a 3-crate workspace:
+- `vectorcade-core`: Basic types (Rgba, RNG) - 5 modules
+- `vectorcade-math`: Math utilities and collision - 7 modules
+- `vectorcade-shared`: API contracts (Game, Input, Draw, Font) - 7 modules
 
-2. **Crate module count exceeded** - 9 modules (max 7)
+Additionally:
+- Split `game.rs` into `game/mod.rs`, `game/ctx.rs`, `game/coords.rs`
+- Split `collision.rs` into `collision/mod.rs`, `collision/aabb.rs`, `collision/circle.rs`
+- Moved `GameRngExt` to separate module to keep `GameRng` trait at 7 methods
 
-**Options to address:**
-- Combine related modules (e.g., color + draw)
-- Split large modules into sub-modules
-- Move helper functions into impl blocks
-- Reduce scope of shared library
-
-These require architectural decisions and will be addressed in a future iteration.
+**Prevention:** Check sw-checklist early and design with module limits in mind.

@@ -1,3 +1,5 @@
+//! RGBA color type for vector graphics.
+
 /// RGBA color with components in 0.0..1.0 range.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Rgba(pub f32, pub f32, pub f32, pub f32);

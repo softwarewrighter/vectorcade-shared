@@ -1,0 +1,11 @@
+[package]
+name = "vectorcade-math"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Math utilities and collision detection for VectorCade."
+
+[dependencies]
+glam.workspace = true
+
+[dev-dependencies]

@@ -1,3 +1,13 @@
 [workspace]
-members = ["vectorcade-shared"]
+members = ["vectorcade-core", "vectorcade-math", "vectorcade-shared"]
 resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+
+[workspace.dependencies]
+glam = { version = "0.27", default-features = false, features = ["libm"] }
+vectorcade-core = { path = "vectorcade-core" }
+vectorcade-math = { path = "vectorcade-math" }

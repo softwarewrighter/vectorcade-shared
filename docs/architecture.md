@@ -2,7 +2,7 @@
 
 ## Overview
 
-`vectorcade-shared` is the root crate in a multi-repo DAG for VectorCade, a Rust-based vector graphics arcade game platform. This crate defines the stable API contracts that all other repos depend on.
+`vectorcade-shared` is a Cargo workspace containing the root crates for VectorCade, a Rust-based vector graphics arcade game platform. The workspace defines the stable API contracts that all other repos depend on.
 
 ## Design Principles
 
@@ -10,23 +10,55 @@
 2. **Platform Agnostic** - Must compile and run anywhere Rust runs
 3. **Minimal Dependencies** - Only `glam` for math (with `libm` for no-std compatibility)
 4. **Trait-Based Abstraction** - Define interfaces, not implementations
+5. **sw-checklist Compliance** - Max 7 modules per crate, max 7 functions per module
 
-## Module Structure
+## Workspace Structure
 
 ```
-vectorcade-shared/
-+-- src/
-|   +-- lib.rs      # Crate root, re-exports all modules
-|   +-- collision.rs # AABB, Circle, line intersection
-|   +-- color.rs    # Rgba color type with common constants
-|   +-- draw.rs     # DrawCmd display-list primitives
-|   +-- font.rs     # VectorFont trait and GlyphPath types
-|   +-- game.rs     # Game trait, GameCtx, ScreenInfo, AudioOut
-|   +-- input.rs    # InputState trait, Key/Axis enums
-|   +-- math.rs     # 2D/3D math helpers
-|   +-- rng.rs      # GameRng trait, Xorshift64
-+-- tests/
-    +-- math_smoke.rs
+vectorcade-shared/           # Workspace root
++-- Cargo.toml               # Workspace manifest
++-- vectorcade-core/         # Basic types (Rgba, RNG)
+|   +-- src/
+|       +-- lib.rs
+|       +-- color.rs         # Rgba type with color constants
+|       +-- rng/
+|           +-- mod.rs       # GameRng trait, Xorshift64
+|           +-- ext.rs       # GameRngExt extension trait
+|           +-- xorshift.rs  # Xorshift64 implementation
++-- vectorcade-math/         # Math utilities and collision
+|   +-- src/
+|       +-- lib.rs
+|       +-- helpers.rs       # lerp, clamp, remap, wrap_position
+|       +-- projection.rs    # 3D projection, angle utilities
+|       +-- transform.rs     # 2D transformation matrices
+|       +-- collision/
+|           +-- mod.rs       # Line intersection functions
+|           +-- aabb.rs      # Axis-aligned bounding box
+|           +-- circle.rs    # Circle collision primitive
++-- vectorcade-shared/       # API contracts
+    +-- src/
+    |   +-- lib.rs           # Re-exports core and math crates
+    |   +-- draw.rs          # DrawCmd display-list primitives
+    |   +-- font.rs          # VectorFont trait, GlyphPath types
+    |   +-- input.rs         # InputState trait, Key/Axis enums
+    |   +-- game/
+    |       +-- mod.rs       # Game trait
+    |       +-- ctx.rs       # GameCtx, ScreenInfo, AudioOut
+    |       +-- coords.rs    # NDC/pixel coordinate conversion
+    +-- tests/
+        +-- math_smoke.rs
+```
+
+## Crate Dependencies
+
+```
+vectorcade-core (basic types)
+       |
+       v
+vectorcade-math (depends on core for potential future use)
+       |
+       v
+vectorcade-shared (re-exports both, adds Game/Draw/Input/Font)
 ```
 
 ## Dependency Graph (Multi-Repo DAG)

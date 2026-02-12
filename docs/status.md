@@ -2,22 +2,18 @@
 
 **Last Updated:** 2026-02-12
 
-## Current State: Core API Complete
+## Current State: Core API Complete (Multi-Crate Workspace)
 
 The core API contracts are implemented and ready for downstream consumption.
+Refactored to 3-crate workspace for sw-checklist compliance.
 
-## Module Status
+## Crate Status
 
-| Module | Status | Notes |
-|--------|--------|-------|
-| `collision` | Complete | Aabb, Circle, line intersection tests |
-| `color` | Complete | Rgba with 10 color constants, lerp |
-| `draw` | Complete | DrawCmd enum, Stroke with glow, rect_wire helper |
-| `font` | Complete | VectorFont trait, FontStyleId, GlyphPath types |
-| `game` | Complete | Game trait, GameCtx with RNG, px_to_ndc/ndc_to_px |
-| `input` | Complete | InputState trait, Key, Axis, Button, Pointer |
-| `math` | Complete | wrap_position, lerp, remap, angle helpers, 3D projection |
-| `rng` | Complete | GameRng trait, Xorshift64 implementation |
+| Crate | Modules | Status | Contents |
+|-------|---------|--------|----------|
+| `vectorcade-core` | 5 | Complete | Rgba color type, GameRng trait, Xorshift64 |
+| `vectorcade-math` | 7 | Complete | Collision (Aabb, Circle, line), helpers, projection, transform |
+| `vectorcade-shared` | 7 | Complete | Game trait, DrawCmd, VectorFont trait, InputState trait |
 
 ## Test Status
 
@@ -25,17 +21,19 @@ The core API contracts are implemented and ready for downstream consumption.
 cargo test
 ```
 
-- `math_smoke.rs` - Basic tests for math functions
-- `collision::tests` - AABB, circle, line intersection tests
-- `rng::tests` - Determinism, range bounds, pick tests
+- `vectorcade-core`: 5 RNG tests (determinism, range bounds, pick)
+- `vectorcade-math`: 5 collision tests (AABB, circle, line intersection)
+- `vectorcade-shared`: 2 math smoke tests (helper functions)
 
-**Coverage:** Good (12 tests across 3 modules)
+**Coverage:** Good (12 tests across 3 crates)
 
 ## Build Status
 
 - `cargo build` - Passing
-- `cargo clippy` - Clean
-- `cargo doc` - Builds (docs need expansion)
+- `cargo clippy --all-targets -- -D warnings` - Clean
+- `cargo fmt --check` - Clean
+- `sw-checklist` - 13 passed, 0 failed, 7 warnings
+- `markdown-checker` - All files valid
 
 ## Blocking Issues
 
@@ -52,6 +50,10 @@ None currently.
 
 ## Recent Changes
 
+- Refactored single crate into 3-crate workspace for sw-checklist compliance
+- Split modules: game/ (3 files), collision/ (3 files), rng/ (3 files)
+- Updated to Rust 2024 edition
+- Added comprehensive RNG and collision tests
 - Initial implementation of all modules
 - Basic project structure and Cargo.toml setup
 - AGENTS.md and README.md documentation
@@ -77,6 +79,6 @@ None currently.
 
 ## Compatibility
 
-- Rust edition: 2021
+- Rust edition: 2024
 - MSRV: Not yet established (targeting stable)
 - Platforms: All (pure Rust, no platform deps)

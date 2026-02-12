@@ -1,0 +1,11 @@
+[package]
+name = "vectorcade-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Core types for VectorCade (Rgba, RNG)."
+
+[dependencies]
+# No dependencies - pure Rust types
+
+[dev-dependencies]

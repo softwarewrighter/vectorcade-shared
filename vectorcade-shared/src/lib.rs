@@ -1,23 +1,26 @@
-//! VectorCade shared API contract.
+//! VectorCade shared API contracts.
 //!
-//! This crate must remain pure Rust and platform-agnostic.
-//!
-//! # Modules
-//!
-//! - [`color`] - RGBA colors with classic vector display constants
-//! - [`collision`] - AABB and circle collision detection
+//! This crate provides the game-facing API:
 //! - [`draw`] - Display-list drawing commands
-//! - [`font`] - Vector font traits and glyph types
+//! - [`font`] - Vector font traits
 //! - [`game`] - Game lifecycle trait and context
-//! - [`input`] - Input abstraction (keyboard, axes, pointer)
-//! - [`math`] - 2D/3D math helpers
-//! - [`rng`] - Seedable RNG for deterministic gameplay
+//! - [`input`] - Input abstraction
+//!
+//! Core types and math are re-exported from dependencies:
+//! - [`vectorcade_core`] - Rgba, GameRng, Xorshift64
+//! - [`vectorcade_math`] - Math helpers, collision
 
-pub mod collision;
-pub mod color;
 pub mod draw;
 pub mod font;
 pub mod game;
 pub mod input;
-pub mod math;
-pub mod rng;
+
+// Re-export core types
+pub use vectorcade_core::{GameRng, GameRngExt, Rgba, Xorshift64};
+
+// Re-export math types
+pub use vectorcade_math::{
+    Aabb, Circle, angle_diff, clamp, depth_intensity, inv_lerp, lerp, line_aabb_intersect,
+    line_circle_intersect, normalize_angle, project_persp, remap, rot2, scale2, scale2_uniform,
+    translate2, wrap_position, wrap_range, wrap_signed_unit,
+};

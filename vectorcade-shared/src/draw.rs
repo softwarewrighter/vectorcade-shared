@@ -3,8 +3,8 @@
 //! Games emit a `Vec<DrawCmd>` each frame describing what to render.
 //! The renderer consumes these commands to produce the final image.
 
-use crate::color::Rgba;
 use glam::{Mat3, Vec2};
+use vectorcade_core::Rgba;
 
 /// Stroke style for vector lines.
 #[derive(Clone, Copy, Debug, PartialEq)]
